@@ -1,0 +1,9 @@
+#!/bin/bash
+set -euo pipefail
+cd "${COMFY_DIR:-/workspace/ComfyUI}"
+git init >/dev/null 2>&1 || true
+git remote add upstream https://github.com/comfyanonymous/ComfyUI.git 2>/dev/null || true
+git fetch upstream
+/usr/local/bin/comfy-save
+git rebase upstream/master || git merge --no-edit upstream/master || true
+echo "Updated from upstream."

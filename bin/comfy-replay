@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+FILE="${POST_START_SCRIPT:-/workspace/post_start.sh}"
+if [ ! -f "$FILE" ]; then echo "no file: $FILE"; exit 2; fi
+bash "$FILE" | tee -a /workspace/post_start.log

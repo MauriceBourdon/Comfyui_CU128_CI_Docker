@@ -1,0 +1,10 @@
+#!/bin/bash
+set -euo pipefail
+SEED="${SEED_DIR:-/opt/ComfyUI}"
+HOME_DIR="${COMFY_HOME:-/workspace/ComfyUI}"
+ts=$(date +%F_%H%M%S)
+if [[ -d "$HOME_DIR" ]]; then
+  mv "$HOME_DIR" "${HOME_DIR}.broken.${ts}"
+fi
+rsync -a --delete "$SEED/" "$HOME_DIR/"
+echo "Reset done → $HOME_DIR (backup: ${HOME_DIR}.broken.${ts})"

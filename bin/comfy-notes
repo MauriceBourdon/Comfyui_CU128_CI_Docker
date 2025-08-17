@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+FILE="${POST_START_SCRIPT:-/workspace/post_start.sh}"
+mkdir -p "$(dirname "$FILE")"
+if ! grep -q '^#!/usr/bin/env bash' "$FILE" 2>/dev/null; then
+  cat >"$FILE" <<'HDR'
+#!/usr/bin/env bash
+set -euo pipefail
+STAMPS_DIR="/workspace/.stamps"; mkdir -p "$STAMPS_DIR"
+once() { local name="$1" shift; if [ ! -f "$STAMPS_DIR/$name" ]; then echo "[once] $name → $*"; eval "$@"; touch "$STAMPS_DIR/$name"; else echo "[skip] $name"; fi; }
+safe_link() { local link="$1" target="$2"; if [ -e "$link" ] && [ ! -L "$link" ]; then mv "$link" "${link}.bak.$(date +%s)"; fi; ln -sfnT "$target" "$link"; }
+HDR
+fi
+echo "# $(date +'%F %T')" >> "$FILE"
+printf '%s
+' "$*" >> "$FILE"
+echo "→ ajouté dans $FILE"
+chmod +x "$FILE"
