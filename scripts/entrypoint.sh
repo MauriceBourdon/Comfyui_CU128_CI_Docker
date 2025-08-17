@@ -38,7 +38,7 @@ models:
   controlnet: /workspace/models/controlnet
 YAML
 
-# Symlinks
+# Symlinks (avoid self-link in persist mode)
 safe_link() {
   local link="$1" target="$2"
   if [ -e "$link" ] && [ ! -L "$link" ]; then
@@ -46,7 +46,10 @@ safe_link() {
   fi
   ln -sfnT "$target" "$link"
 }
-safe_link "${DATA_DIR}/ComfyUI"   "${COMFY_DIR}"
+# Only create /workspace/ComfyUI -> COMFY_DIR when NOT in persist mode
+if [[ "${COMFY_PERSIST}" != "true" ]]; then
+  safe_link "${DATA_DIR}/ComfyUI" "${COMFY_DIR}"
+fi
 safe_link "${COMFY_DIR}/models"   "${MODELS_DIR}"
 safe_link "${DATA_DIR}/workflows" "${COMFY_DIR}/user/default/workflows"
 safe_link "${DATA_DIR}/input"     "${COMFY_DIR}/input"

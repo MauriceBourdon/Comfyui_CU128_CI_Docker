@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive     PYTHONUNBUFFERED=1     PATH="/venv/bin:$P
 
 RUN apt-get update && apt-get install -y --no-install-recommends     bash git git-lfs curl ca-certificates ffmpeg     python3 python3-venv python3-pip     tini libgl1 libglib2.0-0 jq rsync aria2     build-essential ninja-build python3-dev  && git lfs install  && rm -rf /var/lib/apt/lists/*
 
-# Python env + PyTorch cu128 (torch only to avoid conflicts/size)
+# Python env + PyTorch cu128
 RUN python3 -m venv /venv  && /venv/bin/pip install -U pip setuptools wheel packaging  && /venv/bin/pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch  && /venv/bin/pip install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm
 
 # ComfyUI seed
@@ -17,7 +17,6 @@ RUN git clone --depth=1 https://github.com/Comfy-Org/ComfyUI-Manager /opt/ComfyU
 COPY scripts/entrypoint.sh /entrypoint.sh
 COPY scripts/download_models_async.sh /scripts/download_models_async.sh
 COPY scripts/download_models_worker.py /scripts/download_models_worker.py
-COPY scripts/restore_state.py /scripts/restore_state.py
 COPY bin/start-comfyui /usr/local/bin/start-comfyui
 COPY bin/start-jupyter /usr/local/bin/start-jupyter
 COPY bin/pull-models /usr/local/bin/pull-models
