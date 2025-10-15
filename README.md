@@ -1,20 +1,41 @@
-# ComfyUI V6.2.1 (CUDA 12.8) — Symlink fix
-- Fix boucle de symlink en mode PERSIST (pas de lien /workspace/ComfyUI -> COMFY_DIR).
-- SageAttention construit au runtime (SAGEATTENTION_BUILD=true).
-- Manifeste de modèles éditable + pull-models.
-- Jupyter optionnel.
+# ComfyUI CU128 Docker Template
 
-ENV typiques (RunPod):
-COMFY_PERSIST=true
-COMFY_HOME=/workspace/ComfyUI
-COMFY_DIR=/opt/ComfyUI
-POST_START_ENABLED=true
-DATA_DIR=/workspace
-MODELS_DIR=/workspace/models
-MODELS_MANIFEST=/workspace/models_manifest.txt
-ENABLE_JUPYTER=true
-JUPYTER_PORT=8888
-COMFY_AUTOSTART=true
-COMFY_PORT=8188
-COMFY_ARGS=--listen 0.0.0.0 --port 8188 --use-sage-attention
-SAGEATTENTION_BUILD=true
+Template Docker complet pour ComfyUI (CUDA 12.8, PyTorch cu128, multi-dossiers de modèles, ComfyUI-Manager, Jupyter, etc.)
+
+## ✅ Inclus
+- ComfyUI avec `--use-sage-attention`
+- Manager de nodes custom (`ComfyUI-Manager`)
+- Support complet des sous-dossiers `models/`
+- Synchronisation des workflows entre ComfyUI et `/workspace/workflows`
+- Scripts CLI (`bin/`) pour :
+  - `comfy-save`, `comfy-update`, `comfy-reset`
+  - `pull-models`, `comfy-notes`, `comfy-replay`
+- JupyterLab activé (port 8888)
+
+## 🚀 Usage avec RunPod
+1. **Mode GitHub (recommandé)** :
+   - Source: GitHub Repo
+   - Dockerfile path: `Dockerfile`
+
+2. **Mode Docker Hub (optionnel)** :
+   ```bash
+   docker build -t yourname/comfyui-cu128:latest .
+   docker push yourname/comfyui-cu128:latest
+   ```
+
+## 📂 Arborescence
+```
+.
+├── Dockerfile
+├── README.md
+├── .gitignore
+├── bin/
+├── scripts/
+├── manifests/
+└── .github/
+```
+
+## 🧠 Variables importantes
+- `COMFY_DIR`, `COMFY_HOME`, `DATA_DIR`
+- `MODELS_MANIFEST=/workspace/models_manifest.txt`
+- `COMFY_ARGS=--listen 0.0.0.0 --port 8188 --use-sage-attention`
