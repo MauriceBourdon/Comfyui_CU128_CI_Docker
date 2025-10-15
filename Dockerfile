@@ -21,14 +21,13 @@ COPY bin/comfy-replay /usr/local/bin/comfy-replay
 COPY manifests/ /manifests/
 
 RUN chmod +x /entrypoint.sh /scripts/download_models_async.sh /scripts/download_models_worker.py             /usr/local/bin/start-comfyui /usr/local/bin/start-jupyter             /usr/local/bin/pull-models /usr/local/bin/comfy-save             /usr/local/bin/comfy-update /usr/local/bin/comfy-reset             /usr/local/bin/comfy-notes /usr/local/bin/comfy-replay
-RUN python3 -m venv /venv \
- && /venv/bin/python -m ensurepip --upgrade \
- && /venv/bin/pip install -U pip setuptools wheel packaging \
- && /venv/bin/pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch \
- && /venv/bin/pip install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm \
- && /venv/bin/pip install --no-cache-dir --upgrade sageattention==0.1.2 triton==2.2.0 \
+RUN pip3 install -U pip setuptools wheel packaging \
+ && pip3 install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch \
+ && pip3 install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm \
+ && pip3 install --no-cache-dir --upgrade sageattention==0.1.2 triton==2.2.0 \
  && git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git /opt/ComfyUI \
- && /venv/bin/pip install --no-cache-dir -r /opt/ComfyUI/requirements.txt
+ && pip3 install --no-cache-dir -r /opt/ComfyUI/requirements.txt
+ && git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git /opt/ComfyUI \
 
 # Defaults
 
