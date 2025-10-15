@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip3 install -U pip setuptools wheel packaging && \
     pip3 install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch && \
     pip3 install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm && \
-    pip3 install --no-cache-dir --upgrade sageattention==0.1.2 triton==2.2.0 && \
+    pip3 install --no-cache-dir --upgrade sageattention==1.0.6 triton==2.2.0 && \
     git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git /opt/ComfyUI && \
     pip3 install --no-cache-dir -r /opt/ComfyUI/requirements.txt
 
@@ -40,7 +40,7 @@ RUN chmod +x /entrypoint.sh /scripts/download_models_async.sh /scripts/download_
 RUN pip3 install -U pip setuptools wheel packaging && \
     pip3 install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch && \
     pip3 install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm && \
-    pip3 install --no-cache-dir --upgrade sageattention==0.1.2 triton==2.2.0 && \
+    pip3 install --no-cache-dir --upgrade sageattention==1.0.6 triton==2.2.0 && \
 RUN python3 -m venv /venv \
  && /venv/bin/python -m ensurepip --upgrade \
 
