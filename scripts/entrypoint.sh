@@ -25,17 +25,56 @@ else
 fi
 
 # Dirs
-mkdir -p "${DATA_DIR}" "${MODELS_DIR}"/{diffusion_models,vae,loras,clip,controlnet}
+mkdir -p "${DATA_DIR}" "${MODELS_DIR}"/DWPose "${MODELS_DIR}"/GFPGAN "${MODELS_DIR}"/LLM "${MODELS_DIR}"/Moge "${MODELS_DIR}"/RealESRGAN "${MODELS_DIR}"/animatediff_models "${MODELS_DIR}"/animatediff_motion_lora "${MODELS_DIR}"/aurasr "${MODELS_DIR}"/checkpoints "${MODELS_DIR}"/clip_vision "${MODELS_DIR}"/depthanything "${MODELS_DIR}"/detection "${MODELS_DIR}"/diffusers "${MODELS_DIR}"/embeddings "${MODELS_DIR}"/facedetection "${MODELS_DIR}"/facerestore_models "${MODELS_DIR}"/gligen "${MODELS_DIR}"/grounding-dino "${MODELS_DIR}"/hypernetworks "${MODELS_DIR}"/inpaint "${MODELS_DIR}"/insightface "${MODELS_DIR}"/ipadapter "${MODELS_DIR}"/liveportrait "${MODELS_DIR}"/loras "${MODELS_DIR}"/mmaudio "${MODELS_DIR}"/mmdets "${MODELS_DIR}"/model_patches "${MODELS_DIR}"/onnx "${MODELS_DIR}"/openpose "${MODELS_DIR}"/openunmix "${MODELS_DIR}"/photomaker "${MODELS_DIR}"/rembg "${MODELS_DIR}"/sam2 "${MODELS_DIR}"/sams "${MODELS_DIR}"/style_models "${MODELS_DIR}"/text_encoders "${MODELS_DIR}"/ultralytics "${MODELS_DIR}"/unet "${MODELS_DIR}"/upscale_models "${MODELS_DIR}"/vae "${MODELS_DIR}"/vae_approx
 mkdir -p "${COMFY_DIR}/user/default/workflows" "${COMFY_DIR}/input" "${COMFY_DIR}/output"
 
 # extra_model_paths.yaml
 cat >"${COMFY_DIR}/extra_model_paths.yaml" <<'YAML'
 models:
-  diffusion_models: /workspace/models/diffusion_models
-  vae: /workspace/models/vae
-  loras: /workspace/models/loras
+  DWPose: /workspace/models/DWPose
+  GFPGAN: /workspace/models/GFPGAN
+  LLM: /workspace/models/LLM
+  Moge: /workspace/models/Moge
+  RealESRGAN: /workspace/models/RealESRGAN
+  animatediff_models: /workspace/models/animatediff_models
+  animatediff_motion_lora: /workspace/models/animatediff_motion_lora
+  aurasr: /workspace/models/aurasr
+  checkpoints: /workspace/models/checkpoints
   clip: /workspace/models/clip
+  clip_vision: /workspace/models/clip_vision
   controlnet: /workspace/models/controlnet
+  depthanything: /workspace/models/depthanything
+  detection: /workspace/models/detection
+  diffusers: /workspace/models/diffusers
+  diffusion_models: /workspace/models/diffusion_models
+  embeddings: /workspace/models/embeddings
+  facedetection: /workspace/models/facedetection
+  facerestore_models: /workspace/models/facerestore_models
+  gligen: /workspace/models/gligen
+  grounding-dino: /workspace/models/grounding-dino
+  hypernetworks: /workspace/models/hypernetworks
+  inpaint: /workspace/models/inpaint
+  insightface: /workspace/models/insightface
+  ipadapter: /workspace/models/ipadapter
+  liveportrait: /workspace/models/liveportrait
+  loras: /workspace/models/loras
+  mmaudio: /workspace/models/mmaudio
+  mmdets: /workspace/models/mmdets
+  model_patches: /workspace/models/model_patches
+  onnx: /workspace/models/onnx
+  openpose: /workspace/models/openpose
+  openunmix: /workspace/models/openunmix
+  photomaker: /workspace/models/photomaker
+  rembg: /workspace/models/rembg
+  sam2: /workspace/models/sam2
+  sams: /workspace/models/sams
+  style_models: /workspace/models/style_models
+  text_encoders: /workspace/models/text_encoders
+  ultralytics: /workspace/models/ultralytics
+  unet: /workspace/models/unet
+  upscale_models: /workspace/models/upscale_models
+  vae: /workspace/models/vae
+  vae_approx: /workspace/models/vae_approx
 YAML
 
 # Symlinks (avoid self-link in persist mode)
