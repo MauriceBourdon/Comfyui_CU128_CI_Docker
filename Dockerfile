@@ -15,7 +15,6 @@ RUN pip3 install -U pip setuptools wheel packaging && \
 # Install ComfyUI
 RUN git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git /opt/ComfyUI && \
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git /opt/ComfyUI/custom_nodes/ComfyUI-Manager && \
-    pip3 install --no-cache-dir -r /opt/ComfyUI/requirements.txt
 
 EXPOSE 8188 8888
 
