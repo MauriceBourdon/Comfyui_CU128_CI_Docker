@@ -11,11 +11,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install Python packages
 RUN pip3 install -U pip setuptools wheel packaging && \
-    git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git /opt/ComfyUI && \
-    git clone https://github.com/ltdrdata/ComfyUI-Manager.git /opt/ComfyUI/custom_nodes/ComfyUI-Manager && \
-    pip3 install --no-cache-dir -r /opt/ComfyUI/requirements.txt
+    pip3 install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch && \
+    pip3 install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm && \
+    pip3 install --no-cache-dir --upgrade sageattention==1.0.6 triton==2.2.0
 
 # Install ComfyUI
+RUN git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git /opt/ComfyUI && \
+    git clone https://github.com/ltdrdata/ComfyUI-Manager.git /opt/ComfyUI/custom_nodes/ComfyUI-Manager && \
+    pip3 install --no-cache-dir -r /opt/ComfyUI/requirements.txt
+    pip3 install --no-cache-dir -r /opt/ComfyUI/requirements.txt
 
 EXPOSE 8188 8888
 
