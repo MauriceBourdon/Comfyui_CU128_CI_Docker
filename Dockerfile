@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip3 install -U pip setuptools wheel packaging && \
     pip3 install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch && \
     pip3 install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm && \
-    pip3 install --no-cache-dir --upgrade sageattention==1.0.6 triton==3.5.0 
+    pip3 install --no-cache-dir --upgrade sageattention==1.0.6 triton==3.5.0
 
 # Install ComfyUI + Manager
 RUN git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git /opt/ComfyUI && \
@@ -25,6 +25,12 @@ EXPOSE 8188 8888
 # Copy entrypoint script
 COPY scripts/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+# Copy model download scripts
+COPY scripts/download_models_async.sh /scripts/download_models_async.sh
+COPY scripts/download_models_worker.py /scripts/download_models_worker.py
+RUN chmod +x /scripts/download_models_async.sh /scripts/download_models_worker.py
+
 
 # Copy bin scripts into /usr/local/bin
 COPY bin/start-comfyui /usr/local/bin/start-comfyui
