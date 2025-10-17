@@ -45,22 +45,11 @@ RUN set -eux; \
 # 🐍 Python + venv + Torch cu128
 # --------------------------
 
-# 🐍 Python + venv
 RUN python3 -m venv /venv && \
-    /venv/bin/python -m pip install -U pip setuptools wheel packaging
-
-# 🔥 PyTorch cu128
-RUN /venv/bin/python -m pip install --no-cache-dir \
-      --index-url https://download.pytorch.org/whl/cu128 \
-      torch torchvision torchaudio
-
-# 📦 Outils
-RUN /venv/bin/python -m pip install --no-cache-dir \
-      jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm
-
-# ⚙️ Triton + SageAttention
-RUN /venv/bin/python -m pip install --no-cache-dir --upgrade \
-      triton==3.5.0 sageattention==1.0.6
+    /venv/bin/python -m pip install -U pip setuptools wheel packaging && \
+    /venv/bin/python -m pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch torchvision torchaudio && \
+    /venv/bin/python -m pip install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm && \
+    /venv/bin/python -m pip install --no-cache-dir --upgrade triton==3.5.0 sageattention==1.0.6
 
 # --------------------------
 # 🚀 ComfyUI + requirements
