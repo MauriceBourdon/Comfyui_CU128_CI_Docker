@@ -1,41 +1,34 @@
-# ComfyUI CU128 Docker Template
+# Runpod Comfy Ultime — CUDA 12.8, symlinks & manifest modèles (SageAttention inclus)
 
-Template Docker complet pour ComfyUI (CUDA 12.8, PyTorch cu128, multi-dossiers de modèles, ComfyUI-Manager, Jupyter, etc.)
+- CUDA **12.8** + **torch cu128** préinstallé
+- ComfyUI + **ComfyUI-Manager**
+- **SageAttention & Triton pré-installés**, et ComfyUI démarre avec `--use-sage-attention` par défaut
+- JupyterLab (port 8888) optionnel
+- **Symlinks** propres vers `/workspace/{ComfyUI,workflows,input,output}`
+- **Manifest modèles** éditable à chaud (`/workspace/models_manifest.txt`)
+- Commandes: `pull-models`
 
-## ✅ Inclus
-- ComfyUI avec `--use-sage-attention`
-- Manager de nodes custom (`ComfyUI-Manager`)
-- Support complet des sous-dossiers `models/`
-- Synchronisation des workflows entre ComfyUI et `/workspace/workflows`
-- Scripts CLI (`bin/`) pour :
-  - `comfy-save`, `comfy-update`, `comfy-reset`
-  - `pull-models`, `comfy-notes`, `comfy-replay`
-- JupyterLab activé (port 8888)
-
-## 🚀 Usage avec RunPod
-1. **Mode GitHub (recommandé)** :
-   - Source: GitHub Repo
-   - Dockerfile path: `Dockerfile`
-
-2. **Mode Docker Hub (optionnel)** :
-   ```bash
-   docker build -t yourname/comfyui-cu128:latest .
-   docker push yourname/comfyui-cu128:latest
-   ```
-
-## 📂 Arborescence
+## Variables d'environnement (RunPod)
 ```
-.
-├── Dockerfile
-├── README.md
-├── .gitignore
-├── bin/
-├── scripts/
-├── manifests/
-└── .github/
+ENABLE_JUPYTER=true
+JUPYTER_PORT=8888
+COMFY_AUTOSTART=true
+COMFY_PORT=8188
+COMFY_ARGS=--listen 0.0.0.0 --port 8188 --use-sage-attention
+
+DATA_DIR=/workspace
+COMFY_DIR=/opt/ComfyUI
+MODELS_DIR=/workspace/models
+MODELS_MANIFEST=/workspace/models_manifest.txt
+
+PIP_CACHE_DIR=/workspace/.pip-cache
+PIP_NO_CACHE_DIR=0
+# HF_TOKEN=... (si besoin d'accès privé)
 ```
 
-## 🧠 Variables importantes
-- `COMFY_DIR`, `COMFY_HOME`, `DATA_DIR`
-- `MODELS_MANIFEST=/workspace/models_manifest.txt`
-- `COMFY_ARGS=--listen 0.0.0.0 --port 8188 --use-sage-attention`
+## Quick start
+1. Lance le pod, Jupyter & ComfyUI montent (SageAttention actif par défaut).
+2. Édite `/workspace/models_manifest.txt` (ou copie depuis `/manifests`).
+3. `pull-models --sync` puis rafraîchis l'UI ComfyUI.
+
+Plus de détails dans **docs/MODELS.md** et **docs/SAGE.md**.
