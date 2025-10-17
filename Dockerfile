@@ -11,6 +11,7 @@ RUN python3 -m venv /venv && \
     /venv/bin/pip install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm && \
     /venv/bin/pip install --no-cache-dir --upgrade sageattention==1.0.6 triton==3.5.0
 
+
 # ComfyUI + requirements
 RUN git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git /opt/ComfyUI  && /venv/bin/pip install --no-cache-dir -r /opt/ComfyUI/requirements.txt
 
