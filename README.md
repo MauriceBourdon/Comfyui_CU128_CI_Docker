@@ -1,55 +1,41 @@
-# ComfyUI CUDA 12.8 Docker Template
+# ComfyUI CU128 Docker Template
 
-Dockerfile optimisé pour RunPod, GitHub Actions ou build local.  
-Inclut ComfyUI + ComfyUI-Manager avec support complet CUDA 12.8 + PyTorch cu128 + SageAttention + Triton.
+Template Docker complet pour ComfyUI (CUDA 12.8, PyTorch cu128, multi-dossiers de modèles, ComfyUI-Manager, Jupyter, etc.)
 
 ## ✅ Inclus
+- ComfyUI avec `--use-sage-attention`
+- Manager de nodes custom (`ComfyUI-Manager`)
+- Support complet des sous-dossiers `models/`
+- Synchronisation des workflows entre ComfyUI et `/workspace/workflows`
+- Scripts CLI (`bin/`) pour :
+  - `comfy-save`, `comfy-update`, `comfy-reset`
+  - `pull-models`, `comfy-notes`, `comfy-replay`
+- JupyterLab activé (port 8888)
 
-- Python 3.10 avec `pip3` système (pas de venv)
-- ComfyUI installé depuis GitHub (`/opt/ComfyUI`)
-- ComfyUI-Manager préintégré (si activé dans le repo)
-- Support de :
-  - `sageattention==1.0.6`
-  - `triton==2.2.0`
-  - `torch` via PyTorch cu128
-  - `jupyterlab`, `safetensors`, `huggingface_hub`, etc.
-- Prêt à déployer sur RunPod ou via `docker build .`
+## 🚀 Usage avec RunPod
+1. **Mode GitHub (recommandé)** :
+   - Source: GitHub Repo
+   - Dockerfile path: `Dockerfile`
 
-## 📦 Ports exposés
+2. **Mode Docker Hub (optionnel)** :
+   ```bash
+   docker build -t yourname/comfyui-cu128:latest .
+   docker push yourname/comfyui-cu128:latest
+   ```
 
-| Service     | Port  |
-|-------------|-------|
-| ComfyUI     | 8188  |
-| JupyterLab  | 8888  |
-
-## 🚀 Commande recommandée pour RunPod
-
-**Arguments :**
+## 📂 Arborescence
 ```
---listen 0.0.0.0 --port 8188 --use-sage-attention
-```
-
-**Variables d’environnement RunPod (recommandées) :**
-```env
-COMFY_PORT=8188
-ENABLE_JUPYTER=true
-JUPYTER_PORT=8888
-COMFY_PERSIST=true
-POST_START_ENABLED=true
-DATA_DIR=/workspace
-COMFY_DIR=/opt/ComfyUI
-COMFY_HOME=/workspace/ComfyUI
-MODELS_DIR=/workspace/models
-MODELS_MANIFEST=/workspace/models_manifest.txt
+.
+├── Dockerfile
+├── README.md
+├── .gitignore
+├── bin/
+├── scripts/
+├── manifests/
+└── .github/
 ```
 
-## 🛠 Build local (facultatif)
-```bash
-docker build -t comfy-cu128:v1 .
-docker run -p 8188:8188 -p 8888:8888 comfy-cu128:v1
-```
-
-## ✅ Testé sur
-- RunPod (Dockerfile from GitHub)
-- GitHub Actions (buildx)
-- GPU A100 / 4090 / H100
+## 🧠 Variables importantes
+- `COMFY_DIR`, `COMFY_HOME`, `DATA_DIR`
+- `MODELS_MANIFEST=/workspace/models_manifest.txt`
+- `COMFY_ARGS=--listen 0.0.0.0 --port 8188 --use-sage-attention`
