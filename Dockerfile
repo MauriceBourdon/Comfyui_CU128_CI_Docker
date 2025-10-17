@@ -19,10 +19,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # 🐍 Python + venv + torch
 # --------------------------
 RUN python3 -m venv /venv && \
-    /venv/bin/pip install --upgrade pip setuptools wheel packaging && \
+    /venv/bin/pip install -U pip setuptools wheel packaging && \
     /venv/bin/pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch && \
     /venv/bin/pip install --no-cache-dir jupyterlab==4.2.5 huggingface-hub==0.24.6 safetensors==0.4.5 pyyaml tqdm && \
-/venv/bin/pip install --no-cache-dir --upgrade sageattention==1.0.6 triton==3.5.0
+    /venv/bin/pip install --no-cache-dir --upgrade sageattention==1.0.6 triton==3.5.0
 
 # --------------------------
 # 🚀 ComfyUI + requirements
